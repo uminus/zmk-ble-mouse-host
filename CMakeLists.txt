@@ -1,6 +1,7 @@
 zephyr_include_directories(include)
 
 zephyr_library()
+zephyr_include_directories(${APPLICATION_SOURCE_DIR}/include)
 zephyr_library_sources_ifdef(CONFIG_ZMK_BLE_MOUSE_HOST src/ble_mouse_host.c)
 zephyr_library_sources_ifdef(CONFIG_ZMK_BLE_MOUSE_HOST src/hid_parser.c)
 zephyr_library_sources_ifdef(CONFIG_ZMK_BLE_MOUSE_HOST src/wheel_invert.c)
