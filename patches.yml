@@ -1,0 +1,21 @@
+# Patch paths are relative to --patch-base patches.
+# Targets are west-workspace paths; base commits match config/west.yml.
+patches:
+  - path: zmk/0001-require-sc-for-peripheral-pairing.patch
+    sha256sum: 931ed73f79eb8dd3ffa34012402b42d08e4ec6b053e2c063e45d778799c1db4c
+    module: zmk
+    author: "uminus"
+    email: "11168714+uminus@users.noreply.github.com"
+    date: "2026-11-16"
+    upstreamable: false
+    apply-command: "git apply"
+    comments: "Base commit 9ebbeff0a8b69a42f14aec022cdf16c7a107b9e0. Change ZMK_BLE SC_PAIR_ONLY from select to imply so CONFIG_BT_SMP_SC_PAIR_ONLY=n can enable Legacy Central pairing; keep Peripheral pairing SC-only in the application callback."
+  - path: zephyr/0001-delay-central-anchor-625us.patch
+    sha256sum: 47e95f7e74cd563a74b45ecff606cd364a9676bc374d05ad76154cc5c5bd3a99
+    module: zephyr
+    author: "uminus"
+    email: "11168714+uminus@users.noreply.github.com"
+    date: "2026-11-16"
+    upstreamable: false
+    apply-command: "git apply"
+    comments: "Base commit 10ba6d0cb38bc3d258775d27982f707599320085. Local SlimBlade Pro workaround: shift the connection anchor by 625 us while preserving scanner stop and connection interval. Not established as a generic controller fix."

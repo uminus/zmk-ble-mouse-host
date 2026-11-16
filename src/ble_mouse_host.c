@@ -52,8 +52,8 @@ static const struct device *const mh_dev = DEVICE_DT_INST_GET(0);
 
 /* Mouse link connection parameters: low latency for responsive pointing.
  * interval 11.25-15 ms (units of 1.25 ms), latency 0, supervision 4 s. */
-#define MH_CONN_PARAM BT_LE_CONN_PARAM(9, 12, 0, 400)
-
+// #define MH_CONN_PARAM BT_LE_CONN_PARAM(9, 12, 0, 400)
+#define MH_CONN_PARAM BT_LE_CONN_PARAM(24, 40, 0, 42)
 /* ---- state ------------------------------------------------------------- */
 
 enum mh_mode { MH_IDLE, MH_SCAN };

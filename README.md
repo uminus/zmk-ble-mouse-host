@@ -25,6 +25,34 @@ mouse itself.
 ZMK's pointing subsystem (`CONFIG_ZMK_POINTING`) is enabled automatically — the
 module `select`s it — so you don't need to set it yourself.
 
+## Local workspace patches
+
+This checkout includes patches for the pinned SlimBlade Pro test workspace:
+
+| Target | Base commit | Patch |
+| --- | --- | --- |
+| ZMK | `9ebbeff0a8b69a42f14aec022cdf16c7a107b9e0` | [Allow Legacy Central pairing / require Peripheral SC](patches/zmk/0001-require-sc-for-peripheral-pairing.patch) |
+| Zephyr | `10ba6d0cb38bc3d258775d27982f707599320085` | [Delay the central connection anchor by 625 us](patches/zephyr/0001-delay-central-anchor-625us.patch) |
+
+The ZMK patch allows Legacy pairing for the Central mouse link while keeping
+Peripheral pairing SC-only. The Zephyr patch is a local SlimBlade Pro workaround;
+it also affects other Central connections through the same setup path and is not
+established as a general controller fix.
+
+After obtaining the pinned dependencies, run once from the west workspace root:
+
+```bash
+west patch --src-module zmk-ble-mouse-host \
+  --patch-base patches \
+  --patch-yml patches.yml apply
+```
+
+Keep `CONFIG_BT_SMP_SC_PAIR_ONLY=n` and `CONFIG_MAIN_STACK_SIZE=2048` in the keyboard's
+configuration, then run the application's normal `west build` command.
+
+Packaging verification covered patch application on isolated source copies;
+`west patch`, firmware builds, and device behavior remain unverified for this package.
+
 ## Installation
 
 Add the module to your `zmk-config`'s `config/west.yml`:

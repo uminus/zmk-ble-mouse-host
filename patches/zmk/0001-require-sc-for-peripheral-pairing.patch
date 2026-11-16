@@ -1,0 +1,29 @@
+diff --git a/app/Kconfig b/app/Kconfig
+--- a/app/Kconfig
++++ b/app/Kconfig
+@@ -160,7 +160,7 @@
+     bool "BLE (HID over GATT)"
+     select BT
+     select BT_SMP
+-    select BT_SMP_SC_PAIR_ONLY
++    imply BT_SMP_SC_PAIR_ONLY
+     select BT_SMP_APP_PAIRING_ACCEPT
+     select BT_PERIPHERAL
+     select BT_DIS
+diff --git a/app/src/ble.c b/app/src/ble.c
+--- a/app/src/ble.c
++++ b/app/src/ble.c
+@@ -639,6 +639,13 @@
+         return BT_SECURITY_ERR_PAIR_NOT_ALLOWED;
+     }
+ 
++    /* AuthReq bit 3 is SC (Core Vol. 3, Part H, 3.5.1). Keep PC pairing
++     * SC-only while the central mouse connection may use legacy pairing. */
++    if (info.role == BT_CONN_ROLE_PERIPHERAL && !(feat->auth_req & 0x08)) {
++        LOG_WRN("Rejecting PC pairing without Secure Connections");
++        return BT_SECURITY_ERR_AUTH_REQUIREMENT;
++    }
++
+     return BT_SECURITY_ERR_SUCCESS;
+ };
+ 
