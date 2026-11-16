@@ -1,5 +1,8 @@
 # zmk-ble-mouse-host
 
+> [!NOTE]
+> **This project is a fork of [tadakado/zmk-ble-mouse-host](https://github.com/tadakado/zmk-ble-mouse-host), focused on adding Kensington SlimBlade Pro support to ZMK.**
+
 A [ZMK](https://zmk.dev) module that lets a keyboard act as a **BLE HID host
 (central)** for an external Bluetooth mouse, and forwards the mouse's pointer
 events into ZMK's own pointing pipeline.
